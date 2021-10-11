@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import {
   FormControl,
   FormLabel,
@@ -39,7 +39,6 @@ import { format } from "date-fns";
 registerLocale("pt_br", pt_br);
 
 export default function News() {
-  const textRef = useRef(null);
   const toast = useToast();
 
   const [initDate, setInitDate] = useState(new Date());
@@ -99,14 +98,6 @@ export default function News() {
       <InputRightElement pointerEvents="none" children={<FaCalendarAlt />} />
     </InputGroup>
   );
-
-  const ScrollToBottom = () => {
-    textRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    ScrollToBottom();
-  }, [text]);
 
   function handleFile(file) {
     if (file) {
@@ -441,8 +432,6 @@ export default function News() {
             Limpar Tudo
           </Button>
         </HStack>
-
-        <div ref={textRef} />
       </Container>
 
       <Modal isOpen={preview} onClose={() => setPreview(false)} size="5xl">
