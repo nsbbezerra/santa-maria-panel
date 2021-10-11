@@ -1,0 +1,65 @@
+.calendar {
+  position: absolute;
+  z-index: 10000;
+}
+
+#news-container {
+  padding: 15px !important;
+}
+
+#news-container h1 {
+  font-size: 35px;
+  font-weight: bold;
+  line-height: 70px;
+}
+
+#news-container h2 {
+  font-size: 25px;
+  font-weight: bold;
+  line-height: 70px;
+}
+
+#news-container h3 {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 60px;
+}
+
+#news-container blockquote {
+  padding: 15px;
+  font-size: 18px;
+  font-style: italic;
+  color: rgb(104, 104, 104);
+  border-left-width: 5px;
+  border-left-color: rgb(128, 128, 128);
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 40px;
+}
+
+#news-container ul {
+  margin-left: 40px;
+}
+
+#news-container ol {
+  margin-left: 40px;
+}
+
+#news-container p {
+  text-align: justify;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#news-container p code {
+  text-indent: 0px !important;
+  background-color: rgba(128, 128, 128, 0.05);
+  padding: 3px;
+}
+
+#news-container pre code {
+  padding: 15px;
+  display: block;
+  background-color: rgba(128, 128, 128, 0.05);
+  border-radius: 6px;
+}
