@@ -147,7 +147,7 @@ export default function ListNews() {
   }
 
   const handleNews = async (id) => {
-    const result = await data.find((obj) => obj._id === id);
+    const result = await data.noticias.find((obj) => obj._id === id);
     setId(result._id);
     setTitle(result.title);
     setResume(result.resume);
@@ -160,7 +160,7 @@ export default function ListNews() {
   };
 
   const handlePreview = async (id) => {
-    const result = await data.find((obj) => obj._id === id);
+    const result = await data.noticias.find((obj) => obj._id === id);
     setShowNews(result);
     setPreview(true);
   };
@@ -198,7 +198,7 @@ export default function ListNews() {
   };
 
   const handleImage = async (id) => {
-    const result = await data.find((obj) => obj._id === id);
+    const result = await data.noticias.find((obj) => obj._id === id);
     setCopy(result.imageCopy);
     setId(result._id);
     setModalImage(true);

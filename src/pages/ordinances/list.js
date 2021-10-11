@@ -66,9 +66,12 @@ export default function ListOrdinances() {
   async function findSecretary() {
     try {
       const response = await api.get("/secretaries");
-      setSecretary_id(response.data[0]._id);
-      setSecretaries(response.data);
+      if (response.data.length) {
+        setSecretary_id(response.data[0]._id);
+        setSecretaries(response.data);
+      }
     } catch (error) {
+      console.log(error);
       if (error.message === "Network Error") {
         alert(
           "Sem conexão com o servidor, verifique sua conexão com a internet."
