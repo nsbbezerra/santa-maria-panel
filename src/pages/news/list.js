@@ -28,6 +28,12 @@ import {
   useToast,
   IconButton,
   Icon,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from "@chakra-ui/react";
 import {
   AiFillSave,
@@ -56,6 +62,7 @@ export default function ListNews() {
   const [modalGalery, setModalGalery] = useState(false);
   const [modalImage, setModalImage] = useState(false);
   const [modalInfo, setModalInfo] = useState(false);
+  const [removeNews, setRemoveNews] = useState(false);
 
   const [initDate, setInitDate] = useState(new Date());
   const [text, setText] = useState(RichTextEditor.createEmptyValue());
@@ -292,6 +299,36 @@ export default function ListNews() {
     }
   };
 
+  function handleRemoveNews(id) {
+    setId(id);
+    setRemoveNews(true);
+  }
+
+  const RemoveNew = async () => {
+    setLoading(true);
+
+    try {
+      const response = await api.delete(`/news/${id}`);
+      showToast(response.data.message, "success", "Sucesso");
+      const updated = await data.noticias.filter((obj) => obj._id !== id);
+      setNews(updated);
+      setLoading(false);
+      setRemoveNews(false);
+    } catch (error) {
+      setLoading(false);
+      if (error.message === "Network Error") {
+        alert(
+          "Sem conexão com o servidor, verifique sua conexão com a internet."
+        );
+        return false;
+      }
+      const typeError =
+        error.response.data.message || "Ocorreu um erro ao salvar";
+      const message = error.response.data.errorMessage;
+      showToast(message, "error", typeError);
+    }
+  };
+
   return (
     <>
       <Grid
@@ -371,6 +408,9 @@ export default function ListNews() {
                 </MenuItem>
                 <MenuItem onClick={() => handleNews(not._id)}>
                   Alterar Textos
+                </MenuItem>
+                <MenuItem onClick={() => handleRemoveNews(not._id)}>
+                  Remover Matéria
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -709,6 +749,36 @@ export default function ListNews() {
           </ModalBody>
         </ModalContent>
       </Modal>
+
+      <AlertDialog isOpen={removeNews} onClose={() => setRemoveNews(false)}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Remover Matéria
+            </AlertDialogHeader>
+
+            <AlertDialogBody>Deseja remover esta matéria?</AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button
+                colorScheme="red"
+                onClick={() => setRemoveNews(false)}
+                variant="outline"
+              >
+                Não
+              </Button>
+              <Button
+                onClick={() => RemoveNew()}
+                ml={3}
+                colorScheme="blue"
+                isLoading={loading}
+              >
+                Sim
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 }
