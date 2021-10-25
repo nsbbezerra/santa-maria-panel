@@ -34,6 +34,8 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import {
   AiFillSave,
@@ -344,17 +346,27 @@ export default function ListNews() {
                 src={`${route}/img/${not.image}`}
                 layout="responsive"
                 h="160px"
+                w="100%"
                 alt="Prefeitura de Santa Maria"
                 objectFit="cover"
               />
-              <Flex
-                h={["200px", "230px", "230px", "230px", "230px"]}
-                align="center"
-              >
+              <Flex align="center">
                 <Box p={3}>
-                  <Tag colorScheme="blue" mb={1} size="sm">
-                    {not.tag}
-                  </Tag>
+                  {!not.tag.includes(",") ? (
+                    <Tag colorScheme="blue" mb={1} size="sm">
+                      {not.tag}
+                    </Tag>
+                  ) : (
+                    <Wrap mb={1} spacing={1}>
+                      {not.tag.split(",").map((not) => (
+                        <WrapItem key={not}>
+                          <Tag colorScheme="blue" mb={1} size="sm">
+                            {not}
+                          </Tag>
+                        </WrapItem>
+                      ))}
+                    </Wrap>
+                  )}
                   <Heading
                     fontSize={["md", "lg", "lg", "lg", "lg"]}
                     noOfLines={4}

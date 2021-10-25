@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const route = localStorage.getItem("route");
+const route = "https://vps34531.publiccloud.com.br";
 
 const api = axios.create({
   baseURL: route,

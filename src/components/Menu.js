@@ -250,53 +250,6 @@ export default function MenuApp() {
             </MenuList>
           </Menu>
         </HStack>
-
-        <Flex justify="center" direction="column" h="100%" w="18%">
-          <Popover placement="bottom-end">
-            <PopoverTrigger>
-              <Button
-                leftIcon={<AiOutlineCloudServer />}
-                colorScheme="green"
-                _hover={{ transform: "scale(1.05)" }}
-                _active={{ transform: "scale(1)" }}
-              >
-                Conexão com Servidor
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent _focus={{ outline: "none", shadow: "lg" }}>
-              <PopoverHeader fontWeight="semibold">
-                Rota de Conexão
-              </PopoverHeader>
-              <PopoverArrow />
-              <PopoverCloseButton />
-              <PopoverBody>
-                <Input
-                  size="sm"
-                  rounded="md"
-                  bg="whiteAlpha.900"
-                  focusBorderColor="green.500"
-                  value={route}
-                  onChange={(e) => setRoute(e.target.value)}
-                />
-              </PopoverBody>
-              <PopoverFooter d="flex" justifyContent="flex-end">
-                <ButtonGroup size="sm">
-                  <Button
-                    colorScheme="green"
-                    size="sm"
-                    leftIcon={<AiOutlineSave />}
-                    _hover={{ transform: "scale(1.05)" }}
-                    _active={{ transform: "scale(1)" }}
-                    onClick={() => saveRoute()}
-                    w="100px"
-                  >
-                    Salvar
-                  </Button>
-                </ButtonGroup>
-              </PopoverFooter>
-            </PopoverContent>
-          </Popover>
-        </Flex>
       </Flex>
     </>
   );
