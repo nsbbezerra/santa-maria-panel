@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import IndexPage from "../pages";
+import StoreBanner from "../pages/banner";
 import BidsIndex from "../pages/bids";
 import DecreesIndex from "../pages/decrees";
 import Desks from "../pages/desks/index";
@@ -48,6 +49,9 @@ export default function Router() {
       </Route>
       <Route path="/decrees">
         <DecreesIndex />
+      </Route>
+      <Route path="/banner">
+        <StoreBanner />
       </Route>
     </Switch>
   );

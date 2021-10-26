@@ -1,80 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   HStack,
   Icon,
   Button,
   Flex,
   Text,
-  Input,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  useToast,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-  ButtonGroup,
 } from "@chakra-ui/react";
-import {
-  AiFillHome,
-  AiOutlineSave,
-  AiOutlineVideoCamera,
-  AiOutlineCloudServer,
-} from "react-icons/ai";
+import { AiFillHome, AiOutlineVideoCamera } from "react-icons/ai";
 import { GiDesk } from "react-icons/gi";
-import { IoNewspaper, IoCalendarSharp } from "react-icons/io5";
+import {
+  IoNewspaper,
+  IoCalendarSharp,
+  IoDesktopOutline,
+} from "react-icons/io5";
 import { IoIosImages, IoIosArrowDown } from "react-icons/io";
 import { RiMailSendFill, RiPagesFill } from "react-icons/ri";
 import { ImOffice } from "react-icons/im";
 import { useHistory } from "react-router-dom";
 
 export default function MenuApp() {
-  const toast = useToast();
   const { push } = useHistory();
-  const [route, setRoute] = useState("");
 
   function goTo(rt) {
     push(rt);
   }
-
-  async function findRoute() {
-    const route = await localStorage.getItem("route");
-    if (route) {
-      setRoute(route);
-    } else {
-      setRoute("");
-    }
-  }
-
-  function showToast(message, status, title) {
-    toast({
-      title: title,
-      description: message,
-      status: status,
-      position: "bottom-right",
-      duration: 8000,
-      isClosable: true,
-    });
-  }
-
-  async function saveRoute() {
-    await localStorage.setItem("route", route);
-    showToast(
-      "Rota salva com sucesso, para que as configurações tenham efeito reinicie o sistema",
-      "success",
-      "Sucesso"
-    );
-  }
-
-  useEffect(() => {
-    findRoute();
-  }, []);
 
   return (
     <>
@@ -247,6 +200,28 @@ export default function MenuApp() {
               </MenuItem>
               <MenuItem onClick={() => goTo("/ordinances")}>PORTARIAS</MenuItem>
               <MenuItem onClick={() => goTo("/decrees")}>DECRETOS</MenuItem>
+            </MenuList>
+          </Menu>
+
+          <Menu>
+            <MenuButton
+              as={Button}
+              h="55px"
+              colorScheme="gray"
+              variant="solid"
+              w="85px"
+              _hover={{ transform: "scale(1.05)" }}
+              _active={{ transform: "scale(1)" }}
+            >
+              <Flex justify="center" align="center" direction="column">
+                <Icon as={IoDesktopOutline} fontSize="2xl" />
+                <Text mt={2} fontSize="x-small">
+                  SITE <Icon as={IoIosArrowDown} fontSize="xx-small" />
+                </Text>
+              </Flex>
+            </MenuButton>
+            <MenuList>
+              <MenuItem onClick={() => goTo("/banner")}>SALVAR BANNER</MenuItem>
             </MenuList>
           </Menu>
         </HStack>
