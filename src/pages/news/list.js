@@ -144,9 +144,6 @@ export default function ListNews() {
 
   if (error) {
     if (error.message === "Network Error") {
-      alert(
-        "Sem conexão com o servidor, verifique sua conexão com a internet."
-      );
       return false;
     }
     const typeError =
@@ -352,20 +349,26 @@ export default function ListNews() {
               />
               <Flex align="center">
                 <Box p={3}>
-                  {!not.tag.includes(",") ? (
-                    <Tag colorScheme="blue" mb={1} size="sm">
-                      {not.tag}
-                    </Tag>
+                  {!not.tag ? (
+                    ""
                   ) : (
-                    <Wrap mb={1} spacing={1}>
-                      {not.tag.split(",").map((not) => (
-                        <WrapItem key={not}>
-                          <Tag colorScheme="blue" mb={1} size="sm">
-                            {not}
-                          </Tag>
-                        </WrapItem>
-                      ))}
-                    </Wrap>
+                    <>
+                      {!not.tag.includes(",") ? (
+                        <Tag colorScheme="blue" mb={1} size="sm">
+                          {not.tag}
+                        </Tag>
+                      ) : (
+                        <Wrap mb={1} spacing={1}>
+                          {not.tag.split(",").map((not) => (
+                            <WrapItem key={not}>
+                              <Tag colorScheme="blue" mb={1} size="sm">
+                                {not}
+                              </Tag>
+                            </WrapItem>
+                          ))}
+                        </Wrap>
+                      )}
+                    </>
                   )}
                   <Heading
                     fontSize={["md", "lg", "lg", "lg", "lg"]}

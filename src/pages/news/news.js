@@ -27,7 +27,7 @@ import {
 } from "@chakra-ui/react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import pt_br from "date-fns/locale/pt-BR";
-import { FaCalendarAlt, FaImages, FaTrash, FaEraser } from "react-icons/fa";
+import { FaCalendarAlt, FaImages, FaTrash } from "react-icons/fa";
 import { AiFillSave, AiOutlineZoomIn } from "react-icons/ai";
 import { File, InputFileFull } from "../../styles/uploader";
 import { IoIosImages } from "react-icons/io";
@@ -137,24 +137,8 @@ export default function News() {
       showToast("Insira um título", "warning", "Atenção");
       return false;
     }
-    if (resume === "") {
-      showToast("Insira um resumo", "warning", "Atenção");
-      return false;
-    }
-    if (tag === "") {
-      showToast("Insira uma tag", "warning", "Atenção");
-      return false;
-    }
-    if (author === "") {
-      showToast("Insira um autor", "warning", "Atenção");
-      return false;
-    }
     if (!thumbnail) {
       showToast("Insira uma imagem para a matéria", "warning", "Atenção");
-      return false;
-    }
-    if (copy === "") {
-      showToast("Insira uma Copy para a imagem", "warning", "Atenção");
       return false;
     }
     setLoading(true);
@@ -173,9 +157,12 @@ export default function News() {
 
     try {
       const response = await api.post("/news", data);
-      setId(response.data.id);
       showToast(response.data.message, "success", "Sucesso");
-      setActiveGalery(true);
+      if (galery.length !== 0) {
+        saveGalery(response.data.id);
+      } else {
+        clear();
+      }
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -192,7 +179,7 @@ export default function News() {
     }
   };
 
-  const saveGalery = async () => {
+  const saveGalery = async (idNews) => {
     if (galery.length === 0) {
       showToast("Insira imagens na galeria", "warning", "Atenção");
       return false;
@@ -212,7 +199,7 @@ export default function News() {
     });
 
     try {
-      const response = await api.put(`/newsGalery/${id}`, data);
+      const response = await api.put(`/newsGalery/${idNews}`, data);
       showToast(response.data.message, "success", "Sucesso");
       clearGalery();
       setLoadingGalery(false);
@@ -258,7 +245,7 @@ export default function News() {
             onChange={(e) => setTitle(e.target.value)}
           />
         </FormControl>
-        <FormControl mt={3} isRequired>
+        <FormControl mt={3}>
           <FormLabel>Resumo da Notícia</FormLabel>
           <Textarea
             rows={2}
@@ -269,7 +256,7 @@ export default function News() {
           />
         </FormControl>
         <Grid mt={3} templateColumns="1fr 1fr 1fr" gap={5}>
-          <FormControl isRequired>
+          <FormControl>
             <FormLabel>Tag da Notícia</FormLabel>
             <Input
               placeholder="Tag da Notícia"
@@ -277,7 +264,7 @@ export default function News() {
               onChange={(e) => setTag(e.target.value)}
             />
           </FormControl>
-          <FormControl isRequired>
+          <FormControl>
             <FormLabel>Autor da Notícia</FormLabel>
             <Input
               placeholder="Autor da Notícia"
@@ -285,7 +272,7 @@ export default function News() {
               onChange={(e) => setAuthor(e.target.value)}
             />
           </FormControl>
-          <FormControl isRequired>
+          <FormControl>
             <FormLabel>Data da Publicação</FormLabel>
             <DatePicker
               selected={initDate}
@@ -333,7 +320,7 @@ export default function News() {
           )}
         </FormControl>
 
-        <FormControl mt={3} isRequired>
+        <FormControl mt={3}>
           <FormLabel>Copy da Imagem</FormLabel>
           <Input
             placeholder="Copy da Imagem"
@@ -356,10 +343,7 @@ export default function News() {
         </FormControl>
 
         <FormControl mt={5}>
-          <FormLabel>
-            Galeria de Imagens (É preciso salvar a notícia primeiro para inserir
-            as imagens na galeria)
-          </FormLabel>
+          <FormLabel>Galeria de Imagens</FormLabel>
           <Grid templateColumns="repeat(4, 1fr)" gap={5}>
             {!previewGalery.length
               ? ""
@@ -406,30 +390,6 @@ export default function News() {
             onClick={() => save()}
           >
             Salvar
-          </Button>
-          <Button
-            size="lg"
-            colorScheme="blue"
-            leftIcon={<AiFillSave />}
-            _hover={{ transform: "scale(1.05)" }}
-            _active={{ transform: "scale(1)" }}
-            variant="outline"
-            isDisabled={!activeGalery}
-            isLoading={loadingGalery}
-            onClick={() => saveGalery()}
-          >
-            Salvar Galeria
-          </Button>
-
-          <Button
-            size="lg"
-            colorScheme="green"
-            leftIcon={<FaEraser />}
-            _hover={{ transform: "scale(1.05)" }}
-            _active={{ transform: "scale(1)" }}
-            onClick={() => clearGalery()}
-          >
-            Limpar Tudo
           </Button>
         </HStack>
       </Container>
